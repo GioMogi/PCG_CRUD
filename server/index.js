@@ -1,19 +1,24 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const multer = require('multer');
-const path = require('path');
-
+const dotenv = require('dotenv');
 const app = express();
-app.use(express.json());
+
+dotenv.config();
 
 // connection to MondoDB
-mongoose.connect('mongodb+srv://gmogi92:PCG123@cluster0.9zibsmr.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true });
-
-const userSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+mongoose.connect(process.env.MONGO_URI, {
+}).then(() => {
+  console.log('Connected to MongoDB');
+}).catch((error) => {
+  console.error('Error connecting to MongoDB', error);
 });
 
+app.use(express.json());
 
+
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`)
+})
