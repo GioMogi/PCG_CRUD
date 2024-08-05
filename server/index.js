@@ -15,6 +15,10 @@ mongoose.connect(process.env.MONGO_URI, {
 
 app.use(express.json());
 
+// routes
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/owners', require('./routes/owners'));
+app.use('/api/landholdings', require('./routes/landHoldings'));
 
 
 const PORT = process.env.PORT || 3000;
