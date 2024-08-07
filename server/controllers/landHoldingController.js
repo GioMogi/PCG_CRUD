@@ -18,7 +18,7 @@ exports.createLandHolding = async (req, res) => {
   const { name, owner, legalEntity, netMineralAcres, mineralOwnerRoyalty, sectionName, section, township, range, titleSource } = req.body;
 
   try {
-    console.log("Creating land holding with data:", req.body);
+
     const newLandHolding = new LandHolding({
       name,
       owner,
@@ -32,7 +32,6 @@ exports.createLandHolding = async (req, res) => {
       titleSource,
     });
     let savedLandHolding = await newLandHolding.save();
-    console.log("saved land holdings:", savedLandHolding)
 
     if (owner) {
       await Owner.findByIdAndUpdate(owner, { $inc: { totalLandHoldings: 1 } })
@@ -140,7 +139,7 @@ exports.uploadFile = [upload.single('file'), async (req, res) => {
       landHolding.files = [];
     }
 
-    const filePath = req.file.filename; 
+    const filePath = req.file.filename;
     landHolding.files.push(filePath);
     await landHolding.save();
 

@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <main >
+      <main>
         <div className="p-4">
           <Routes>
             <Route

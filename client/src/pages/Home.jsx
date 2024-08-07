@@ -5,7 +5,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-800 text-white px-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white px-4">
       <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 text-center">
         Welcome to Owners and Land Holdings Management
       </h1>

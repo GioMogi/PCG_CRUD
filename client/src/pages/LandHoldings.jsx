@@ -10,15 +10,11 @@ export default function LandHoldings() {
   const [editingData, setEditingData] = useState({});
   const [file, setFile] = useState(null);
 
-  console.log("LandHoldings component rendered");
 
   useEffect(() => {
-    console.log("landholdings component mounted");
     const fetchLandHoldings = async () => {
       try {
-        console.log("fetching land holdings...");
         const response = await api.get("/landholdings");
-        console.log("Fetched Land Holdings", response.data);
         setLandHoldings(response.data);
       } catch (error) {
         console.error("Error fetching land holdings:", error);
@@ -130,6 +126,7 @@ export default function LandHoldings() {
                       name="name"
                       value={editingData.name}
                       onChange={handleChange}
+                      className="shadow-md"
                     />
                   </td>
                   <td className="py-2 px-4 border-b">
@@ -141,7 +138,7 @@ export default function LandHoldings() {
                       name="legalEntity"
                       value={editingData.legalEntity}
                       onChange={handleChange}
-                      className="w-20 text-center"
+                      className="w-20 text-center shadow-md"
                     />
                   </td>
                   <td className="py-2 px-4 border-b text-center">
@@ -150,7 +147,7 @@ export default function LandHoldings() {
                       name="netMineralAcres"
                       value={editingData.netMineralAcres}
                       onChange={handleChange}
-                      className="w-16 text-center"
+                      className="w-16 text-center shadow-md"
                     />
                   </td>
                   <td className="py-2 px-4 border-b">
@@ -159,7 +156,7 @@ export default function LandHoldings() {
                       name="mineralOwnerRoyalty"
                       value={editingData.mineralOwnerRoyalty}
                       onChange={handleChange}
-                      className="w-16 text-center"
+                      className="w-16 text-center shadow-md"
                     />
                   </td>
                   <td className="py-2 px-4 border-b">
@@ -168,7 +165,7 @@ export default function LandHoldings() {
                       name="sectionName"
                       value={editingData.sectionName}
                       onChange={handleChange}
-                      className="text-center"
+                      className="text-center shadow-md"
                     />
                   </td>
                   <td className="py-2 px-4 border-b">
@@ -177,7 +174,7 @@ export default function LandHoldings() {
                       name="section"
                       value={editingData.section}
                       onChange={handleChange}
-                      className="w-16 text-center"
+                      className="w-16 text-center shadow-md"
                     />
                   </td>
                   <td className="py-2 px-4 border-b">
@@ -186,7 +183,7 @@ export default function LandHoldings() {
                       name="township"
                       value={editingData.township}
                       onChange={handleChange}
-                      className="w-16 text-center"
+                      className="w-16 text-center shadow-md"
                     />
                   </td>
                   <td className="py-2 px-4 border-b">
@@ -195,7 +192,7 @@ export default function LandHoldings() {
                       name="range"
                       value={editingData.range}
                       onChange={handleChange}
-                      className="w-16 text-center"
+                      className="w-16 text-center shadow-md"
                     />
                   </td>
                   <td className="py-2 px-4 border-b">
@@ -203,7 +200,7 @@ export default function LandHoldings() {
                       name="titleSource"
                       value={editingData.titleSource}
                       onChange={handleChange}
-                      className="w-13 py-1 px-2 border rounded text-center"
+                      className="w-13 py-1 px-2 border rounded text-center shadow-md"
                     >
                       <option value="" disabled>
                         Select Title Source
@@ -290,13 +287,13 @@ export default function LandHoldings() {
                   <td className="py-2 px-4 border-b text-center">
                     <button
                       onClick={() => handleEditLandHolding(landHolding._id)}
-                      className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+                      className="bg-gray-700 hover:bg-gray-600 text-white font-bold px-4 h-8 rounded "
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDeleteLandHolding(landHolding._id)}
-                      className="bg-red-700 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                      className="bg-red-700 hover:bg-red-600 text-white font-bold  px-4 h-8 my-1 rounded"
                     >
                       Delete
                     </button>

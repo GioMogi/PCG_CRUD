@@ -26,12 +26,11 @@ export default function Owners() {
 
   const handleCreateOwner = async (owner) => {
     try {
-      console.log("creating owner with date:", owner);
       const response = await api.post("/owners", owner);
-      console.log("Owner created:", response.data);
       setOwners([...owners, response.data]);
       setIsModalOpen(false);
     } catch (error) {
+      alert('Owner with this name and address already exists')
       if (error.response) {
         console.error("Error creating owner:", error.response.data); // Log the response data in case of error
       } else {
