@@ -8,18 +8,12 @@ const fs = require('fs');
 
 dotenv.config();
 
-const allowedOrigin = ['https://pcg-crud.vercel.app']
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow acces from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  }
-}))
+  origin: ['https://pcg-crud.vercel.app'], // Add your frontend URLs here
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
