@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: 'https://pcg-crud-c6a7b494e9a6.herokuapp.com/api',
 });
 
 api.interceptors.request.use((config) => {
