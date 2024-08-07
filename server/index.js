@@ -10,6 +10,7 @@ dotenv.config();
 
 
 app.use(cors({
+  origin: '*',
   origin: ['https://pcg-crud.vercel.app'], // Add your frontend URLs here
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
