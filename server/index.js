@@ -11,7 +11,7 @@ dotenv.config();
 
 const app = express();
 
-const allowedOrigins = ['https://giomogi.github.io/PCG_CRUD/'];
+const allowedOrigins = ['https://giomogi.github.io/PCG_CRUD/', 'https://giomogi.github.io'];
 
 app.use(cors({
   origin: allowedOrigins,
