@@ -1,75 +1,108 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../services/api";
+import OwnersList from "../components/SideBar";
+import NewOwner from "../components/NewOwner";
+import SelectedOwner from "../components/SelectedOwner";
+import Modal from "../components/Modal";
+import EditOwner from "../components/EditOwner";
 
 export default function Owners() {
   const [owners, setOwners] = useState([]);
-  const [name, setName] = useState("");
-  const [entityType, setEntityType] = useState("");
-  const [ownerType, setOwnerType] = useState("");
-  const [address, setAddress] = useState("");
+  const [selectedOwner, setSelectedOwner] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchOwners = async () => {
-      const response = await axios.get("/api/owners");
-      setOwners(response.data);
+      try {
+        const response = await api.get("/owners");
+        setOwners(response.data);
+      } catch (error) {
+        console.error("Error fetching owners:", error);
+      }
     };
     fetchOwners();
   }, []);
 
-  const handleCreateOwner = async (e) => {
-    e.preventDefault();
-    const response = await axios.post("/api/owners", {
-      name,
-      entityType,
-      ownerType,
-      address,
-    });
-    setOwners([...owners, response.data]);
+  const handleCreateOwner = async (owner) => {
+    try {
+      console.log("creating owner with date:", owner);
+      const response = await api.post("/owners", owner);
+      console.log("Owner created:", response.data);
+      setOwners([...owners, response.data]);
+      setIsModalOpen(false);
+    } catch (error) {
+      if (error.response) {
+        console.error("Error creating owner:", error.response.data); // Log the response data in case of error
+      } else {
+        console.error("Error creating owner:", error.message);
+      }
+    }
+  };
+
+  const handleSelectOwner = async (id) => {
+    try {
+      const response = await api.get(`/owners/${id}`);
+      setSelectedOwner(response.data);
+    } catch (error) {
+      console.error("Error fetching owner details", error);
+    }
+  };
+
+  const handleEditOwner = (owner) => {
+    setSelectedOwner(owner);
+    setIsEditModalOpen(true);
+  };
+
+  const handleSaveEdit = async (id, updatedOwner) => {
+    try {
+      const response = await api.put(`/owners/${id}`, updatedOwner);
+      setOwners(
+        owners.map((owner) => (owner._id === id ? response.data : owner))
+      );
+      setSelectedOwner(response.data);
+      setIsEditModalOpen(false);
+    } catch (error) {
+      console.error("Error updating owner", error);
+    }
   };
 
   const handleDeleteOwner = async (id) => {
-    await axios.delete(`/api/owners/${id}`);
-    setOwners(owners.filter((owner) => owner._id !== id));
+    try {
+      await api.delete(`/owners/${id}`);
+      setOwners(owners.filter((owner) => owner._id !== id));
+      setSelectedOwner(null);
+    } catch (error) {
+      console.error("Error deleting owner:", error);
+    }
   };
 
   return (
-    <div>
-      <h1>Owners</h1>
-      <form onSubmit={handleCreateOwner}>
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+    <div className="flex min-h-screen">
+      <OwnersList
+        owners={owners}
+        onSelectOwner={handleSelectOwner}
+        onAddOwner={() => setIsModalOpen(true)}
+      />
+      <div className="flex-1 p-4">
+        <SelectedOwner
+          owner={selectedOwner}
+          onEditOwner={handleEditOwner}
+          onDeleteOwner={handleDeleteOwner}
         />
-        <input
-          type="text"
-          placeholder="Entity Type"
-          value={entityType}
-          onChange={(e) => setEntityType(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Owner Type"
-          value={ownerType}
-          onChange={(e) => setOwnerType(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <button type="submit">Create Owner</button>
-      </form>
-      <ul>
-        {owners.map((owner) => (
-          <li key={owner._id}>
-            {owner.name} - {owner.address}
-            <button onClick={() => handleDeleteOwner(owner._id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      </div>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <NewOwner onSave={handleCreateOwner} />
+      </Modal>
+      <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
+        {selectedOwner && (
+          <EditOwner
+            owner={selectedOwner}
+            onSave={handleSaveEdit}
+            onClose={() => setIsEditModalOpen(false)}
+          />
+        )}
+      </Modal>
     </div>
   );
 }

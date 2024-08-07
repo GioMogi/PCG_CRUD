@@ -23,6 +23,7 @@ const OwnerSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  files: [{ type: String }]
 });
 
-module.export = mongoose.model('Owner', OwnerSchema);
+module.exports = mongoose.model('Owner', OwnerSchema);

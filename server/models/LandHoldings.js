@@ -8,7 +8,7 @@ const LandHoldingSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Owner',
-    required: true,
+    required: false,
   },
   legalEntity: {
     type: String,
@@ -34,7 +34,7 @@ const LandHoldingSchema = new mongoose.Schema({
   township: {
     type: String,
     required: true,
-    match: /^[0-9{3}[NS]$]/,
+    match: /^[0-9]{3}[NS]$/,
   },
   range: {
     type: String,
@@ -46,6 +46,7 @@ const LandHoldingSchema = new mongoose.Schema({
     required: true,
     enum: ['Class A', 'Class B', 'Class C', 'Class D'],
   },
+  files: [{ type: String }] // array of file paths
 });
 
-module.export = mongoose.model('LandHolding', LandHoldingSchema);
+module.exports = mongoose.model('LandHolding', LandHoldingSchema);
