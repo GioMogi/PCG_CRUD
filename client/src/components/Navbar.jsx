@@ -11,7 +11,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-gray-900 p-4">
+    <nav className="bg-gray-900 p-4 sticky top-0">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-white text-lg font-bold">
           <Link to="/home" className="hover:text-gray-300 font-bold">Home</Link>
