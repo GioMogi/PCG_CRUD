@@ -49,6 +49,9 @@ app.use('/api/auth', require('./routes/auth.js'));
 app.use('/api/owners', require('./routes/owners.js'));
 app.use('/api/landholdings', require('./routes/landHoldings.js'));
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
 
 const PORT = process.env.PORT || 3000;
 
