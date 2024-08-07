@@ -9,7 +9,7 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers['x-auth-token'] = token;
   }
-  return config;
+  return config;     
 });
 
 export default api;
