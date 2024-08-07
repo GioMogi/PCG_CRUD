@@ -2,7 +2,7 @@
   "name": "pcg-crud-root",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server/index.js",
+    "start": "cd server && node index.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "engines": {
