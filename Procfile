@@ -1,2 +1,2 @@
-web: cd server && npm start
+web: node server/index.js
 
